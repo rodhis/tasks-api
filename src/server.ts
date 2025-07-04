@@ -1,12 +1,12 @@
 import express from 'express'
-import { router } from './routes/tasks'
+import tasksRouter from './routes/tasks'
 import { errorHandler } from './middlewares/errorHandler'
 
 const app = express()
 
 app.use(express.json())
 
-app.use('/api', router)
+app.use('/api', tasksRouter)
 
 app.use(errorHandler)
 

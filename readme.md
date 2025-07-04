@@ -1,61 +1,121 @@
-# Tasks Manager API
+# API Gerenciador de Tarefas
 
-A simple Tasks Manager API built with MVC (Model-View-Controller) architecture.
+Uma API REST para gerenciamento de tarefas construída com arquitetura MVC (Model-View-Controller) usando TypeScript.
 
-## Features
+## Funcionalidades
 
-- Create, read, update, and delete tasks
-- RESTful API endpoints
-- MVC project structure for maintainability and scalability
+- ✅ Criar, listar, atualizar e deletar tarefas
+- 🔐 Sistema de autenticação com JWT
+- 👤 Gerenciamento de usuários
+- 🛡️ Validação de dados com Zod
+- 🏗️ Arquitetura MVC para manutenibilidade e escalabilidade
+- 🔒 Criptografia de senhas com bcrypt
 
-## Project Structure
+## Estrutura do Projeto
 
 ```
 /tasks-api
-├── controllers/
-│   └── taskController.js
-├── models/
-│   └── taskModel.js
-├── routes/
-│   └── taskRoutes.js
-├── app.js
+├── src/
+│   ├── controllers/          # Controladores (lógica de negócio)
+│   │   ├── TaskController.ts
+│   │   └── UserController.ts
+│   ├── models/              # Modelos de dados
+│   │   ├── Task.ts
+│   │   └── User.ts
+│   ├── routes/              # Definição das rotas
+│   │   ├── auth.ts
+│   │   └── tasks.ts
+│   ├── middlewares/         # Middlewares personalizados
+│   │   └── errorHandler.ts
+│   ├── errors/             # Classes de erro customizadas
+│   │   └── HttpError.ts
+│   ├── schemas/            # Esquemas de validação
+│   │   └── validationSchemas.ts
+│   └── server.ts           # Arquivo principal do servidor
+├── build/                  # Arquivos compilados
+├── package.json
+├── tsconfig.json
 └── readme.md
 ```
 
-## Endpoints
+## Endpoints da API
 
-| Method | Endpoint        | Description           |
-|--------|----------------|----------------------|
-| GET    | /tasks         | List all tasks       |
-| GET    | /tasks/:id     | Get a single task    |
-| POST   | /tasks         | Create a new task    |
-| PUT    | /tasks/:id     | Update a task        |
-| DELETE | /tasks/:id     | Delete a task        |
+### Autenticação
+| Método | Endpoint        | Descrição                    |
+|--------|----------------|------------------------------|
+| POST   | /register      | Registrar novo usuário       |
+| POST   | /login         | Fazer login                  |
+| POST   | /logout        | Fazer logout                 |
 
-## Getting Started
+### Tarefas
+| Método | Endpoint        | Descrição                    |
+|--------|----------------|------------------------------|
+| GET    | /tasks         | Listar todas as tarefas      |
+| GET    | /tasks/:id     | Obter uma tarefa específica  |
+| POST   | /tasks         | Criar nova tarefa            |
+| PUT    | /tasks/:id     | Atualizar tarefa existente   |
+| DELETE | /tasks/:id     | Deletar tarefa               |
 
-1. Clone the repository:
+## Como Executar
+
+1. Clone o repositório:
     ```bash
     git clone https://github.com/yourusername/tasks-api.git
     cd tasks-api
     ```
 
-2. Install dependencies:
+2. Instale as dependências:
     ```bash
     npm install
     ```
 
-3. Start the server:
+3. Configure as variáveis de ambiente:
     ```bash
+    # Crie um arquivo .env na raiz do projeto
+    PORT=3000
+    JWT_SECRET=seu_jwt_secret_aqui
+    ```
+
+4. Execute em modo de desenvolvimento:
+    ```bash
+    npm run dev
+    ```
+
+5. Ou compile e execute em produção:
+    ```bash
+    npm run build
     npm start
     ```
 
-## Technologies Used
+## Tecnologias Utilizadas
 
-- Node.js
-- Express.js
-- (Optional) MongoDB / Mongoose
+### Backend & Runtime
+- **Node.js**: Runtime JavaScript server-side para executar a aplicação
+- **TypeScript**: Superset do JavaScript que adiciona tipagem estática, melhorando a qualidade e manutenibilidade do código
 
-## License
+### Framework & Servidor
+- **Express.js**: Framework web minimalista e flexível para Node.js, usado para criar as rotas e middlewares da API
 
-MIT
+### Autenticação & Segurança
+- **JWT (jsonwebtoken)**: Biblioteca para criação e verificação de tokens JWT para autenticação stateless
+- **bcrypt**: Biblioteca para hash de senhas, garantindo que as senhas sejam armazenadas de forma segura
+- **cookie-parser**: Middleware para parsing de cookies HTTP de modo a melhorar o uso com JSON
+
+### Validação & Configuração
+- **Zod**: Biblioteca de validação de esquemas TypeScript-first para validar dados de entrada
+- **dotenv**: Carrega variáveis de ambiente de um arquivo .env para process.env
+
+### Desenvolvimento
+- **tsx**: Execução e watch de arquivos TypeScript em tempo real durante o desenvolvimento
+- **@types/***: Definições de tipos TypeScript para as bibliotecas JavaScript utilizadas
+
+### Renderização (se aplicável)
+- **EJS**: Engine de template para renderização de views HTML (caso seja necessário)
+
+## Arquitetura MVC
+
+- **Models**: Definem a estrutura dos dados (Task, User)
+- **Controllers**: Contêm a lógica de negócio (TaskController, UserController)
+- **Routes**: Definem os endpoints da API e conectam às controllers
+- **Middlewares**: Funções que processam requisições (autenticação, tratamento de erros)
+

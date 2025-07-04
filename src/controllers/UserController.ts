@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { User } from '../models/User';
 
@@ -13,22 +12,19 @@ export class UserController {
     if (User.findByUsername(username)) {
       return res.status(409).json({ error: 'Username já existe' });
     }
-    const hash = await bcrypt.hash(password, 10);
-    const user = User.create(username, hash);
+    
+    const user = User.create(username, password);
     return res.status(201).json({ id: user.id, username: user.username });
   }
 
   static async login(req: Request, res: Response) {
     const { username, password } = req.body;
     const user = User.findByUsername(username);
-    if (!user) {
+    if (!user || !(await user.verifyPassword(password))) {
       return res.status(401).json({ error: 'Credenciais inválidas' });
     }
-    const match = await bcrypt.compare(password, user.passwordHash);
-    if (!match) {
-      return res.status(401).json({ error: 'Credenciais inválidas' });
-    }
-    const token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET!, { expiresIn: '1h' });
+   
+    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, { expiresIn: '1h' });
     res.cookie('token', token, { httpOnly: true });
     return res.json({ message: 'Autenticado' });
   }

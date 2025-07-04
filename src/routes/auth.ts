@@ -11,14 +11,8 @@ function wrap(fn: AsyncHandler) {
     }
 }
 
-authRouter.post(
-    '/register',
-    wrap(async (req, res) => UserController.register(req, res))
-)
+authRouter.post('/register', wrap(UserController.register))
 
-authRouter.post(
-    '/login',
-    wrap(async (req, res) => UserController.login(req, res))
-)
+authRouter.post('/login', wrap(UserController.login))
 
 export default authRouter

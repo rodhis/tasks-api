@@ -4,13 +4,13 @@ import { HttpError } from '../errors/HttpError'
 import { taskCreateSchema, taskUpdateSchema } from '../schemas/validationSchemas'
 
 export class TaskController {
-    //GET: /api/tasks
+    //GET: /tasks
     index: Handler = (req: Request, res: Response) => {
         const tasks = Task.findAll()
         res.json(tasks)
     }
 
-    //GET: /api/tasks/:id
+    //GET: /tasks/:id
     show: Handler = (req: Request, res: Response) => {
         const { id } = req.params
         const task = Task.findById(+id)
@@ -18,14 +18,14 @@ export class TaskController {
         res.json(task)
     }
 
-    //POST: /api/tasks
+    //POST: /tasks
     store = (req: Request, res: Response) => {
         const parsedBody = taskCreateSchema.parse(req.body)
         const newTask = Task.create(parsedBody)
         res.status(201).json(newTask)
     }
 
-    //PUT: /api/tasks/:id
+    //PUT: /tasks/:id
     update: Handler = (req: Request, res: Response) => {
         const { id } = req.params
         const parsedBody = taskUpdateSchema.parse(req.body)
@@ -34,11 +34,11 @@ export class TaskController {
         res.status(201).json(updatedTask)
     }
 
-    //DELETE: /api/tasks/:id
+    //DELETE: /tasks/:id
     delete: Handler = (req: Request, res: Response) => {
-        const { id } = req.params;
-        const deletedTask = Task.delete(+id);
-        if (!deletedTask) throw new HttpError(404, "Task not found");
-        res.status(204).send();
+        const { id } = req.params
+        const deletedTask = Task.delete(+id)
+        if (!deletedTask) throw new HttpError(404, 'Task not found')
+        res.status(204).send()
     }
 }

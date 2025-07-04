@@ -5,7 +5,7 @@ const tasksRouter = Router()
 const taskController = new TaskController()
 
 tasksRouter.get('/tasks', taskController.index)
-tasksRouter.post('/tasks', taskController.store)
+tasksRouter.post('/tasks', taskController.create)
 tasksRouter.get('/tasks/:id', taskController.show)
 tasksRouter.put('/tasks/:id', taskController.update)
 tasksRouter.delete('/tasks/:id', taskController.delete)

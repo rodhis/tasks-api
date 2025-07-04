@@ -19,7 +19,7 @@ export class TaskController {
     }
 
     //POST: /tasks
-    store = (req: Request, res: Response) => {
+    create = (req: Request, res: Response) => {
         const parsedBody = taskCreateSchema.parse(req.body)
         const newTask = Task.create(parsedBody)
         res.status(201).json(newTask)

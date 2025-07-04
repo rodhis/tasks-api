@@ -4,6 +4,7 @@ interface TaskAttributes {
   description: string;
   status: "to-do" | "in-progress" | "done";
   priority: "low" | "medium" | "high";
+  ownerId: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -16,6 +17,7 @@ export class Task {
     description: string;
     status: "to-do" | "in-progress" | "done";
     priority: "low" | "medium" | "high";
+    ownerId: number;
     createdAt: Date;
     updatedAt: Date;
 
@@ -27,6 +29,7 @@ export class Task {
     this.description = attributes.description;
     this.status = attributes.status;
     this.priority = attributes.priority;
+    this.ownerId = attributes.ownerId;
     this.createdAt = attributes.createdAt;
     this.updatedAt = attributes.updatedAt;
   }
@@ -39,9 +42,9 @@ export class Task {
       return this.tasks.find(task => task.id === id) ?? null;
     }
 
-    static create(attributes: Omit<TaskAttributes, 'id' | 'createdAt' | 'updatedAt'>): Task {
+    static create(attrs: Omit<TaskAttributes, 'id' | 'createdAt' | 'updatedAt'>): Task {
       const newTask = new Task({
-        ...attributes,
+        ...attrs,
         id: this.sequence++,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -50,10 +53,10 @@ export class Task {
       return newTask;
     }
     
-    static update(id: number, attributes: Partial<Omit<TaskAttributes, 'id' | 'createdAt'>>): Task | null {
+    static update(id: number, attrs: Partial<Omit<TaskAttributes, 'id' | 'createdAt'>>): Task | null {
       const task = this.findById(id);
       if (!task) return null;
-      Object.assign(task, attributes, { updatedAt: new Date() });
+      Object.assign(task, attrs, { updatedAt: new Date() });
       return task;
     }
 

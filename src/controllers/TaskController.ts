@@ -36,9 +36,9 @@ export class TaskController {
 
     //DELETE: /api/tasks/:id
     delete: Handler = (req: Request, res: Response) => {
-        const { id } = req.params
-        const deletedTask = Task.delete(+id)
-        if (!deletedTask) throw new HttpError(404, 'Task not found')
-        res.status(200).json(deletedTask)
+        const { id } = req.params;
+        const deletedTask = Task.delete(+id);
+        if (!deletedTask) throw new HttpError(404, "Task not found");
+        res.status(204).send();
     }
 }

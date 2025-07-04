@@ -13,11 +13,18 @@
     "license": "ISC",
     "type": "commonjs",
     "dependencies": {
+        "bcrypt": "^6.0.0",
+        "cookie-parser": "^1.4.7",
         "dotenv": "^17.0.0",
-        "express": "^5.1.0"
+        "ejs": "^3.1.10",
+        "express": "^5.1.0",
+        "jsonwebtoken": "^9.0.2"
     },
     "devDependencies": {
+        "@types/bcrypt": "^5.0.2",
+        "@types/cookie-parser": "^1.4.9",
         "@types/express": "^5.0.3",
+        "@types/jsonwebtoken": "^9.0.10",
         "@types/node": "^24.0.6",
         "tsx": "^4.20.3",
         "typescript": "^5.8.3",

@@ -42,9 +42,9 @@ export class Task {
       return this.tasks.find(task => task.id === id) ?? null;
     }
 
-    static create(attrs: Omit<TaskAttributes, 'id' | 'createdAt' | 'updatedAt'>): Task {
+    static create(attributes: Omit<TaskAttributes, 'id' | 'createdAt' | 'updatedAt'>): Task {
       const newTask = new Task({
-        ...attrs,
+        ...attributes,
         id: this.sequence++,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -53,10 +53,10 @@ export class Task {
       return newTask;
     }
     
-    static update(id: number, attrs: Partial<Omit<TaskAttributes, 'id' | 'createdAt'>>): Task | null {
+    static update(id: number, attributes: Partial<Omit<TaskAttributes, 'id' | 'createdAt'>>): Task | null {
       const task = this.findById(id);
       if (!task) return null;
-      Object.assign(task, attrs, { updatedAt: new Date() });
+      Object.assign(task, attributes, { updatedAt: new Date() });
       return task;
     }
 

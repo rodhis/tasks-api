@@ -16,11 +16,11 @@ export class User {
     private passwordHash: string
     createdAt: Date
 
-    private constructor(attrs: UserAttributes) {
-        this.id = attrs.id
-        this.username = attrs.username
-        this.passwordHash = attrs.passwordHash
-        this.createdAt = attrs.createdAt
+    private constructor(attributes: UserAttributes) {
+        this.id = attributes.id
+        this.username = attributes.username
+        this.passwordHash = attributes.passwordHash
+        this.createdAt = attributes.createdAt
     }
 
     static create(username: string, password: string): User {

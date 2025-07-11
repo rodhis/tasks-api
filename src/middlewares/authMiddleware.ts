@@ -24,3 +24,14 @@ export function authenticate(req: AuthRequest, res: Response, next: NextFunction
     }
 }
 
+export function authorizeTaskOwner(req: AuthRequest, res: Response, next: NextFunction) {
+    const id = Number(req.params.id)
+    const task = Task.findById(id)
+    if (!task) {
+        return res.status(404).json({ error: 'Tarefa não encontrada' })
+    }
+    if (task.ownerId !== req.user!.id) {
+        return res.status(403).json({ error: 'Acesso não autorizado' })
+    }
+    next()
+}

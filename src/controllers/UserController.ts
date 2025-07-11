@@ -24,7 +24,7 @@ export class UserController {
       return res.status(401).json({ error: 'Credenciais inválidas' });
     }
    
-    const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, { expiresIn: '1h' });
+    const token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET!, { expiresIn: '1h' });
     res.cookie('token', token, { httpOnly: true });
     return res.json({ message: 'Autenticado' });
   }

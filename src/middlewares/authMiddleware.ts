@@ -8,8 +8,12 @@ export interface AuthRequest extends Request {
 
 export function authenticate(req: AuthRequest, res: Response, next: NextFunction): void {
     const token = req.cookies.token
+
     if (!token) {
-        res.status(401).json({ error: 'Não autenticado' })
+        res.status(401).json({
+            error: 'Usuário não logado',
+            message: 'É necessário fazer login para acessar este recurso',
+        })
         return
     }
 
@@ -17,14 +21,20 @@ export function authenticate(req: AuthRequest, res: Response, next: NextFunction
         const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload
 
         if (typeof decoded.sub !== 'number') {
-            res.status(401).json({ error: 'Token inválido: subject inválido' })
+            res.status(401).json({
+                error: 'Token inválido',
+                message: 'O token fornecido possui formato inválido',
+            })
             return
         }
 
         req.user = { id: decoded.sub }
         next()
     } catch (err) {
-        res.status(401).json({ error: 'Token inválido' })
+        res.status(401).json({
+            error: 'Token inválido ou expirado',
+            message: 'É necessário fazer login novamente',
+        })
     }
 }
 

@@ -6,32 +6,50 @@ export interface AuthRequest extends Request {
     user?: { id: number }
 }
 
-export function authenticate(req: AuthRequest, res: Response, next: NextFunction) {
+export function authenticate(req: AuthRequest, res: Response, next: NextFunction): void {
     const token = req.cookies.token
-    if (!token) return res.status(401).json({ error: 'Não autenticado' })
+    if (!token) {
+        res.status(401).json({ error: 'Não autenticado' })
+        return
+    }
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload
 
         if (typeof decoded.sub !== 'number') {
-            return res.status(401).json({ error: 'Token inválido: subject inválido' })
+            res.status(401).json({ error: 'Token inválido: subject inválido' })
+            return
         }
 
         req.user = { id: decoded.sub }
         next()
     } catch (err) {
-        return res.status(401).json({ error: 'Token inválido' })
+        res.status(401).json({ error: 'Token inválido' })
     }
 }
 
-export function authorizeTaskOwner(req: AuthRequest, res: Response, next: NextFunction) {
-    const id = Number(req.params.id)
-    const task = Task.findById(id)
-    if (!task) {
-        return res.status(404).json({ error: 'Tarefa não encontrada' })
+export function authorizeTaskOwner(req: AuthRequest, res: Response, next: NextFunction): void {
+    try {
+        const id = Number(req.params.id)
+
+        if (isNaN(id)) {
+            res.status(400).json({ error: 'ID inválido' })
+            return
+        }
+
+        const task = Task.findById(id)
+        if (!task) {
+            res.status(404).json({ error: 'Tarefa não encontrada' })
+            return
+        }
+
+        if (task.ownerId !== req.user!.id) {
+            res.status(403).json({ error: 'Acesso não autorizado' })
+            return
+        }
+
+        next()
+    } catch (error) {
+        res.status(500).json({ error: 'Erro interno do servidor' })
     }
-    if (task.ownerId !== req.user!.id) {
-        return res.status(403).json({ error: 'Acesso não autorizado' })
-    }
-    next()
 }

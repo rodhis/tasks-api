@@ -1,13 +1,14 @@
 import { Router } from 'express'
 import { TaskController } from '../controllers/TaskController'
+import { authenticate, authorizeTaskOwner } from '../middlewares/authMiddleware'
 
 const tasksRouter = Router()
 const taskController = new TaskController()
 
 tasksRouter.get('/tasks', taskController.index)
-tasksRouter.post('/tasks', taskController.create)
 tasksRouter.get('/tasks/:id', taskController.show)
-tasksRouter.put('/tasks/:id', taskController.update)
-tasksRouter.delete('/tasks/:id', taskController.delete)
+tasksRouter.post('/tasks', authenticate, taskController.create)
+tasksRouter.put('/tasks/:id', authenticate, authorizeTaskOwner, taskController.update)
+tasksRouter.delete('/tasks/:id', authenticate, authorizeTaskOwner, taskController.delete)
 
 export default tasksRouter

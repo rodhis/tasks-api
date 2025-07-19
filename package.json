@@ -9,7 +9,7 @@
         "start": "node build/server.js"
     },
     "keywords": [],
-    "author": "",
+    "author": "Rodhis",
     "license": "ISC",
     "type": "commonjs",
     "dependencies": {

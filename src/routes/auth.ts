@@ -3,7 +3,7 @@ import { UserController } from '../controllers/UserController'
 
 const authRouter = Router()
 
-// Wrapper para lidar com async errors
+// Wrapper to handle async errors
 type AsyncHandler = (req: Request, res: Response, next: NextFunction) => Promise<any>
 function wrap(fn: AsyncHandler) {
     return (req: Request, res: Response, next: NextFunction) => {

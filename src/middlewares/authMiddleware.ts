@@ -11,8 +11,8 @@ export function authenticate(req: AuthRequest, res: Response, next: NextFunction
 
     if (!token) {
         res.status(401).json({
-            error: 'Usuário não logado',
-            message: 'É necessário fazer login para acessar este recurso',
+            error: 'User not logged in',
+            message: 'Login is required to access this resource',
         })
         return
     }
@@ -22,8 +22,8 @@ export function authenticate(req: AuthRequest, res: Response, next: NextFunction
 
         if (typeof decoded.sub !== 'number') {
             res.status(401).json({
-                error: 'Token inválido',
-                message: 'O token fornecido possui formato inválido',
+                error: 'Invalid token',
+                message: 'The provided token has invalid format',
             })
             return
         }
@@ -32,8 +32,8 @@ export function authenticate(req: AuthRequest, res: Response, next: NextFunction
         next()
     } catch (err) {
         res.status(401).json({
-            error: 'Token inválido ou expirado',
-            message: 'É necessário fazer login novamente',
+            error: 'Invalid or expired token',
+            message: 'Login is required again',
         })
     }
 }
@@ -43,23 +43,23 @@ export function authorizeTaskOwner(req: AuthRequest, res: Response, next: NextFu
         const id = Number(req.params.id)
 
         if (isNaN(id)) {
-            res.status(400).json({ error: 'ID inválido' })
+            res.status(400).json({ error: 'Invalid ID' })
             return
         }
 
         const task = Task.findById(id)
         if (!task) {
-            res.status(404).json({ error: 'Tarefa não encontrada' })
+            res.status(404).json({ error: 'Task not found' })
             return
         }
 
         if (task.ownerId !== req.user!.id) {
-            res.status(403).json({ error: 'Acesso não autorizado' })
+            res.status(403).json({ error: 'Unauthorized access' })
             return
         }
 
         next()
     } catch (error) {
-        res.status(500).json({ error: 'Erro interno do servidor' })
+        res.status(500).json({ error: 'Internal server error' })
     }
 }

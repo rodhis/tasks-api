@@ -28,4 +28,9 @@ export class UserController {
         res.cookie('token', token, { httpOnly: true })
         return res.json({ message: 'Autenticado' })
     }
+
+    static async logout(req: Request, res: Response) {
+        res.clearCookie('token')
+        return res.json({ message: 'Logout efetuado com sucesso' })
+    }
 }

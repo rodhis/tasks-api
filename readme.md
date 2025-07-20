@@ -1,121 +1,128 @@
-# API Gerenciador de Tarefas
+# Task Manager API
 
-Uma API REST para gerenciamento de tarefas construída com arquitetura MVC (Model-View-Controller) usando TypeScript.
+A REST API for task management built with MVC (Model-View-Controller) architecture using TypeScript.
 
-## Funcionalidades
+## Features
 
-- ✅ Criar, listar, atualizar e deletar tarefas
-- 🔐 Sistema de autenticação com JWT
-- 👤 Gerenciamento de usuários
-- 🛡️ Validação de dados com Zod
-- 🏗️ Arquitetura MVC para manutenibilidade e escalabilidade
-- 🔒 Criptografia de senhas com bcrypt
+-   ✅ Create, list, update and delete tasks
+-   🔐 JWT authentication system
+-   👤 User management
+-   🛡️ Data validation with Zod
+-   🏗️ MVC architecture for maintainability and scalability
+-   🔒 Password encryption with bcrypt
 
-## Estrutura do Projeto
+## Project Structure
 
 ```
 /tasks-api
 ├── src/
-│   ├── controllers/          # Controladores (lógica de negócio)
+│   ├── controllers/          # Controllers (business logic)
 │   │   ├── TaskController.ts
 │   │   └── UserController.ts
-│   ├── models/              # Modelos de dados
+│   ├── models/              # Data models
 │   │   ├── Task.ts
 │   │   └── User.ts
-│   ├── routes/              # Definição das rotas
+│   ├── routes/              # Route definitions
 │   │   ├── auth.ts
 │   │   └── tasks.ts
-│   ├── middlewares/         # Middlewares personalizados
+│   ├── middlewares/         # Custom middlewares
 │   │   └── errorHandler.ts
-│   ├── errors/             # Classes de erro customizadas
+│   ├── errors/             # Custom error classes
 │   │   └── HttpError.ts
-│   ├── schemas/            # Esquemas de validação
+│   ├── schemas/            # Validation schemas
 │   │   └── validationSchemas.ts
-│   └── server.ts           # Arquivo principal do servidor
-├── build/                  # Arquivos compilados
+│   └── server.ts           # Main server file
+├── build/                  # Compiled files
 ├── package.json
 ├── tsconfig.json
 └── readme.md
 ```
 
-## Endpoints da API
+## API Endpoints
 
-### Autenticação
-| Método | Endpoint        | Descrição                    |
-|--------|----------------|------------------------------|
-| POST   | /register      | Registrar novo usuário       |
-| POST   | /login         | Fazer login                  |
-| POST   | /logout        | Fazer logout                 |
+### Authentication
 
-### Tarefas
-| Método | Endpoint        | Descrição                    |
-|--------|----------------|------------------------------|
-| GET    | /tasks         | Listar todas as tarefas      |
-| GET    | /tasks/:id     | Obter uma tarefa específica  |
-| POST   | /tasks         | Criar nova tarefa            |
-| PUT    | /tasks/:id     | Atualizar tarefa existente   |
-| DELETE | /tasks/:id     | Deletar tarefa               |
+| Method | Endpoint  | Description       |
+| ------ | --------- | ----------------- |
+| POST   | /register | Register new user |
+| POST   | /login    | User login        |
+| POST   | /logout   | User logout       |
 
-## Como Executar
+### Tasks
 
-1. Clone o repositório:
+| Method | Endpoint   | Description          |
+| ------ | ---------- | -------------------- |
+| GET    | /tasks     | List all tasks       |
+| GET    | /tasks/:id | Get specific task    |
+| POST   | /tasks     | Create new task      |
+| PUT    | /tasks/:id | Update existing task |
+| DELETE | /tasks/:id | Delete task          |
+
+## How to Run
+
+1. Clone the repository:
+
     ```bash
     git clone https://github.com/yourusername/tasks-api.git
     cd tasks-api
     ```
 
-2. Instale as dependências:
+2. Install dependencies:
+
     ```bash
     npm install
     ```
 
-3. Configure as variáveis de ambiente:
+3. Configure environment variables:
+
     ```bash
-    # Crie um arquivo .env na raiz do projeto
+    # Create a .env file in the project root
     PORT=3000
-    JWT_SECRET=seu_jwt_secret_aqui
+    JWT_SECRET=your_jwt_secret_here
     ```
 
-4. Execute em modo de desenvolvimento:
+4. Run in development mode:
+
     ```bash
     npm run dev
     ```
 
-5. Ou compile e execute em produção:
+5. Or compile and run in production:
     ```bash
     npm run build
     npm start
     ```
 
-## Tecnologias Utilizadas
+## Technologies Used
 
 ### Backend & Runtime
-- **Node.js**: Runtime JavaScript server-side para executar a aplicação
-- **TypeScript**: Superset do JavaScript que adiciona tipagem estática, melhorando a qualidade e manutenibilidade do código
 
-### Framework & Servidor
-- **Express.js**: Framework web minimalista e flexível para Node.js, usado para criar as rotas e middlewares da API
+-   **Node.js**: Server-side JavaScript runtime to execute the application
+-   **TypeScript**: JavaScript superset that adds static typing, improving code quality and maintainability
 
-### Autenticação & Segurança
-- **JWT (jsonwebtoken)**: Biblioteca para criação e verificação de tokens JWT para autenticação stateless
-- **bcrypt**: Biblioteca para hash de senhas, garantindo que as senhas sejam armazenadas de forma segura
-- **cookie-parser**: Middleware para parsing de cookies HTTP de modo a melhorar o uso com JSON
+### Framework & Server
 
-### Validação & Configuração
-- **Zod**: Biblioteca de validação de esquemas TypeScript-first para validar dados de entrada
-- **dotenv**: Carrega variáveis de ambiente de um arquivo .env para process.env
+-   **Express.js**: Minimalist and flexible web framework for Node.js, used to create API routes and middlewares
 
-### Desenvolvimento
-- **tsx**: Execução e watch de arquivos TypeScript em tempo real durante o desenvolvimento
-- **@types/***: Definições de tipos TypeScript para as bibliotecas JavaScript utilizadas
+### Authentication & Security
 
-### Renderização (se aplicável)
-- **EJS**: Engine de template para renderização de views HTML (caso seja necessário)
+-   **JWT (jsonwebtoken)**: Library for creating and verifying JWT tokens for stateless authentication
+-   **bcrypt**: Library for password hashing, ensuring passwords are stored securely
+-   **cookie-parser**: Middleware for parsing HTTP cookies to improve JSON usage
 
-## Arquitetura MVC
+### Validation & Configuration
 
-- **Models**: Definem a estrutura dos dados (Task, User)
-- **Controllers**: Contêm a lógica de negócio (TaskController, UserController)
-- **Routes**: Definem os endpoints da API e conectam às controllers
-- **Middlewares**: Funções que processam requisições (autenticação, tratamento de erros)
+-   **Zod**: TypeScript-first schema validation library for validating input data
+-   **dotenv**: Loads environment variables from a .env file to process.env
 
+### Development
+
+-   **tsx**: Real-time TypeScript file execution and watching during development
+-   **@types/\***: TypeScript type definitions for the JavaScript libraries used
+
+## MVC Architecture
+
+-   **Models**: Define data structure (Task, User)
+-   **Controllers**: Contain business logic (TaskController, UserController)
+-   **Routes**: Define API endpoints and connect to controllers
+-   **Middlewares**: Functions that process requests (authentication, error handling)
